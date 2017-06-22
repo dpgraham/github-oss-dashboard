@@ -54,6 +54,8 @@
     "chai": "^4.0.2",
     "chai-as-promised": "^7.0.0",
     "concurrently": "^3.5.0",
-    "mocha": "^3.4.2"
+    "css-loader": "^0.28.4",
+    "mocha": "^3.4.2",
+    "style-loader": "^0.18.2"
   }
 }

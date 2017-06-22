@@ -13,6 +13,7 @@ module.exports = {
           presets: ["babel-preset-es2015", "babel-preset-es2016", "babel-preset-es2017", "babel-preset-stage-2", "babel-preset-react"].map(require.resolve)
         }
       },
+      { test: /\.css$/, loader: "style-loader!css-loader" }
     ]
   }
 };
