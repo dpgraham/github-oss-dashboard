@@ -3,14 +3,14 @@ module.exports = {
   output: {
     filename: 'assets/build/bundle.js'
   },
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   module: {
     loaders: [
       {
         test: /\.js$/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2016', 'react']
+          presets: ["babel-preset-es2015", "babel-preset-es2016", "babel-preset-es2017", "babel-preset-stage-2", "babel-preset-react"].map(require.resolve)
         }
       },
     ]
