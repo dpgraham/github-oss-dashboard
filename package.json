@@ -8,8 +8,11 @@
   },
   "scripts": {
     "test": "mocha --compilers js:babel-core/register tests/unit/**/*-specs.js",
-    "transpile": "babel libs/ --out-dir build/",
-    "dev": "babel-watch libs/index.js",
+    "transpile": "npm run transpile:node && npm run transpile:webpack",
+    "transpile:node": "babel libs/ --out-dir build/",
+    "transpile:webpack": "webpack --config webpack/webpack.config.js",
+    "transpile:webpack:watch": "webpack --config webpack/webpack.config.js --watch",
+    "dev": "concurrently \"babel-watch libs/index.js\" \"npm run transpile:webpack:watch\"",
     "start": "npm run transpile && node build/index.js"
   },
   "repository": {
@@ -29,12 +32,15 @@
   "devDependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.24.1",
+    "babel-loader": "^7.1.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2016": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
     "babel-watch": "^2.0.6",
     "chai": "^4.0.2",
     "chai-as-promised": "^7.0.0",
+    "concurrently": "^3.5.0",
     "mocha": "^3.4.2"
   }
 }
