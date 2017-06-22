@@ -9,10 +9,9 @@
   "scripts": {
     "test": "mocha --compilers js:babel-core/register tests/unit/**/*-specs.js",
     "transpile": "npm run transpile:node && npm run transpile:webpack:prod",
-    "transpile:node": "babel libs/ --out-dir build/",
+    "transpile:node": "babel libs/server --out-dir build/server",
     "transpile:webpack:prod": "webpack -p --config webpack/webpack.config.js",
-    "transpile:webpack:dev": "webpack --config webpack/webpack.config.js --watch",
-    "dev": "concurrently \"npm run transpile:webpack:dev\" \"babel-watch libs/index.js\"",
+    "dev": "concurrently \"webpack-dev-server --config webpack/webpack.config.js\" \"babel-watch libs/index.js\"",
     "start": "npm run transpile && node build/index.js"
   },
   "repository": {
@@ -27,15 +26,19 @@
   "homepage": "https://github.com/dpgraham/github-oss-dashboard#readme",
   "dependencies": {
     "antd": "^2.11.1",
+    "babel-plugin-transform-object-assign": "^6.22.0",
     "express": "^4.15.3",
+    "http-proxy-middleware": "^0.17.4",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.5",
     "react-router": "^3.0.2",
     "react-router-redux": "^4.0.8",
+    "react-slick": "^0.14.11",
     "redux": "^3.7.0",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "webpack-dev-middleware": "^1.11.0"
   },
   "devDependencies": {
     "babel": "^6.23.0",

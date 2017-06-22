@@ -1,7 +1,7 @@
 module.exports = {
-  entry: './libs/clients/index.js',
+  entry: './libs/client/index.js',
   output: {
-    filename: 'assets/build/bundle.js'
+    filename: 'bundle.js'
   },
   devtool: 'inline-source-map',
   module: {

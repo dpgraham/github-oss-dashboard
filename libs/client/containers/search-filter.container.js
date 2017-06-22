@@ -4,10 +4,10 @@ import * as SearchFilterActions from '../actions/search-filter.actions';
 import SearchFilterPage from '../components/search-filter/search-filter.component';
 
 function mapStateToProps (state) {
-  return state.inspector;
+  return state.searchFilter;
 }
 
-function mapDispatchToProps (dispatch) {
+function mapDispatchToProps (dispatch) { 
   return bindActionCreators(SearchFilterActions, dispatch);
 }
 
