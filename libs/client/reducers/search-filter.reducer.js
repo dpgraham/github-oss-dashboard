@@ -2,17 +2,20 @@ import { omit } from 'lodash';
 
 import { FETCHING_ORGANIZATIONS, FETCHED_ORGANIZATIONS, SET_ORGANIZATION, 
   FETCHING_REPOSITORIES, FETCHED_REPOSITORIES, SET_REPOSITORY,
-  FETCHING_ISSUES, FETCHED_ISSUES, FETCHED_MEMBERS, SET_FILTER, LAST_UPDATED_FILTER } from '../actions/search-filter.actions';
+  FETCHING_ISSUES, FETCHED_ISSUES, FETCHED_MEMBERS, SET_FILTER, LAST_UPDATED_FILTER,
+  FETCHING_LABELS, FETCHED_LABELS, SET_FILTERRED_LABELS } from '../actions/search-filter.actions';
 
 const INITIAL_STATE = {
   organizations: [],
   repositories: [],
   issues: [],
+  labels: [],
   fetchingOrganizations: false,
   fetchingRepositories: false,
   selectedOrganization: null,
   selectedRepository: null,
   fetchingIssues: false,
+  fetchingLabels: false,
 };
 
 export default function searchFilter (state=INITIAL_STATE, action) {
@@ -76,6 +79,22 @@ export default function searchFilter (state=INITIAL_STATE, action) {
       return {
         ...state,
         fetchingIssues: true,
+      };
+    case FETCHING_LABELS:
+      return {
+        ...state,
+        fetchingLabels: true,
+      };
+    case FETCHED_LABELS:
+      return {
+        ...state,
+        fetchingLabels: false,
+        labels: action.labels,
+      };
+    case SET_FILTERRED_LABELS:
+      return {
+        ...state,
+        filterredLabels: action.filterredLabels,
       };
     default:
       return {...state};

@@ -13,7 +13,7 @@ export default class Inspector extends Component {
 
   render () {
     const { organizations, setOrganization, selectedOrganization, repositories, setRepository, selectedRepository,
-      issues, setFilter, filter, setLastUpdated, lastUpdatedFilter } = this.props;
+      issues, setFilter, filter, setLastUpdated, lastUpdatedFilter, setFilterredLabels, filterredLabels, labels} = this.props;
     return <div>
       <h1>Github Issue Filters</h1>
       <Row>
@@ -54,6 +54,7 @@ export default class Inspector extends Component {
           <Option value='notCommentedOnByMember'>Was not commented on by a team member</Option>
           <Option value='lastCommentedOnByMember'>Was last commented on by a team member</Option>
           <Option value='notLastCommentedOnByMember'>Was not last commented on by a team member</Option>
+          <Option value='commentedOnByMe'>Was commented on by me</Option>
           <Option value='hasNoComments'>Has no comment</Option>
         </Select>
       </Row>
@@ -63,6 +64,12 @@ export default class Inspector extends Component {
           <Option value='none'>Any time</Option>
           <Option value='overTwoWeeksAgo'>More than two weeks ago</Option>
           <Option value='underTwoWeeksAgo'>Less than two weeks ago</Option>
+        </Select>
+      </Row>
+      <Row>
+        <span>Has labels:</span>
+        <Select mode="tags" style={{width:'100%'}} onChange={setFilterredLabels} value={filterredLabels}>
+          {labels.map((label) => <Option key={label.name} value={label.name} style={{backgroundColor: label.color}}>{label.name}</Option>)}
         </Select>
       </Row>
       <Row>

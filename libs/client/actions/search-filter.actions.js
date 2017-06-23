@@ -11,6 +11,9 @@ const FETCHED_MEMBERS = 'FETCHED_MEMBERS';
 const SET_FILTER = 'SET_FILTER';
 const LAST_UPDATED_FILTER = 'LAST_UPDATED_FILTER';
 const FETCHING_ISSUES = 'FETCHING_ISSUES';
+const FETCHING_LABELS = 'FETCHING_LABELS';
+const FETCHED_LABELS = 'FETCHED_LABELS';
+const SET_FILTERRED_LABELS = 'SET_FILTERRED_LABELS';
 
 export function fetchOrganizations () {
   return (dispatch, getState) => {
@@ -69,6 +72,7 @@ export function setRepository (repository) {
     dispatch({type: SET_REPOSITORY, repository});
     fetchIssues()(dispatch, getState);
     fetchMembers()(dispatch, getState);
+    fetchLabels()(dispatch, getState);
   };
 }
 
@@ -88,6 +92,15 @@ function getIssues (org, repository) {
               createdAt
               author {
                 login
+              }
+              reactions {
+                totalCount
+              }
+              labels(last:100) {
+                nodes {
+                  name
+                  color
+                }
               }
               comments(last:100) {
                 nodes {
@@ -155,6 +168,33 @@ export function setLastUpdated (lastUpdatedFilter) {
   };
 }
 
+export function fetchLabels () {
+  return (dispatch) => {
+    dispatch({type: FETCHING_LABELS});
+    makeRequest(`{
+      organization (login:"appium") {
+        repository (name:"appium") {
+          labels(last:100) {
+            nodes {
+              name
+              color
+            }
+          }   
+        }
+      }
+    }`).then(function (response) {
+      const labels = response.data.organization.repository.labels.nodes;
+      dispatch({type: FETCHED_LABELS, labels});
+    });
+  };
+}
+
+export function setFilterredLabels (filterredLabels) {
+  return (dispatch) => {
+    dispatch({type: SET_FILTERRED_LABELS, filterredLabels});
+  }
+}
+
 export { FETCHED_ORGANIZATIONS, FETCHING_ORGANIZATIONS, FETCHED_REPOSITORIES, FETCHING_REPOSITORIES, SET_ORGANIZATION, SET_REPOSITORY, FETCHED_ISSUES, FETCHED_MEMBERS ,
-  SET_FILTER, LAST_UPDATED_FILTER, FETCHING_ISSUES
+  SET_FILTER, LAST_UPDATED_FILTER, FETCHING_ISSUES, FETCHING_LABELS, FETCHED_LABELS, SET_FILTERRED_LABELS
 };
