@@ -1,16 +1,18 @@
 import { omit } from 'lodash';
 
-import { FETCHING_ORGANIZATIONS, FETCHED_ORGANIZATIONS, SET_ORGANIZATION } from '../actions/search-filter.actions';
+import { FETCHING_ORGANIZATIONS, FETCHED_ORGANIZATIONS, SET_ORGANIZATION, 
+  FETCHING_REPOSITORIES, FETCHED_REPOSITORIES, SET_REPOSITORY } from '../actions/search-filter.actions';
 
 const INITIAL_STATE = {
   organizations: [],
   repositories: [],
   fetchingOrganizations: false,
+  fetchingRepositories: false,
   selectedOrganization: null,
+  selectedRepository: null,
 };
 
 export default function searchFilter (state=INITIAL_STATE, action) {
-  console.log('!!!!action', action);
   switch (action.type) {
     case FETCHING_ORGANIZATIONS: 
       return {
@@ -25,13 +27,28 @@ export default function searchFilter (state=INITIAL_STATE, action) {
         fetchingOrganizations: false,
       };
     case SET_ORGANIZATION:
-      console.log('!!!action', action);
       return {
         ...state,
         selectedOrganization: action.organization,
       };
+    case FETCHED_REPOSITORIES:
+      return {
+        ...state,
+        fetchingRepositories: false,
+        repositories: action.repositories,
+      };
+    case FETCHING_REPOSITORIES:
+      return {
+        ...state,
+        fetchingRepositories: true,
+        repositories: [],
+      };
+    case SET_REPOSITORY:
+      return {
+        ...state,
+        selectedRepository: action.repository,
+      };
     default:
-      console.log('!!!!!action', action);
       return {...state};
   }
 }

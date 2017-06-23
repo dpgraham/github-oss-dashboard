@@ -7,11 +7,11 @@ const { Option } = Select;
 export default class Inspector extends Component {
 
   componentWillMount () {
-    this.props.fetchRepositories();
+    this.props.fetchOrganizations();
   }
 
   render () {
-    const { organizations, setOrganization, selectedOrganization } = this.props;
+    const { organizations, setOrganization, selectedOrganization, repositories, setRepository, selectedRepository } = this.props;
     console.log(this.props, '!!!!');
     return <div>
       <Select style={{width: '150px'}}
@@ -20,11 +20,23 @@ export default class Inspector extends Component {
       {
         organizations.map((organization) => <Option 
           style={{ width: 120 }} 
-          key={organization.name}>
+          key={organization.login}
+          value={organization.login}>
           {organization.name}
         </Option>)
       }
       </Select>
+      {repositories && <Select style={{width: '150px'}}
+          value={selectedRepository}
+          onChange={(value) => setRepository(value)}>
+        {
+          repositories.map((repository) => <Option 
+            style={{ width: 120 }} 
+            key={repository.name}>
+            {repository.name}
+          </Option>)
+        }
+        </Select>}
     </div>;
   }
 }
