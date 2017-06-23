@@ -7,6 +7,8 @@ const FETCHING_REPOSITORIES = 'FETCHING_REPOSITORIES';
 const FETCHED_REPOSITORIES = 'FETCHED_REPOSITORIES';
 const SET_REPOSITORY = 'SET_REPOSITORY';
 const FETCHED_ISSUES = 'FETCHED_ISSUES';
+const FETCHED_MEMBERS = 'FETCHED_MEMBERS';
+const SET_FILTER = 'SET_FILTER';
 
 export function fetchOrganizations () {
   return (dispatch, getState) => {
@@ -64,6 +66,7 @@ export function setRepository (repository) {
   return (dispatch, getState) => {
     dispatch({type: SET_REPOSITORY, repository});
     fetchIssues()(dispatch, getState);
+    fetchMembers()(dispatch, getState);
   };
 }
 
@@ -80,10 +83,7 @@ function getIssues (org, repository) {
               title
               url
               author {
-                avatarUrl
                 login
-                resourcePath
-                url
               }
               comments(last:100) {
                 nodes {
@@ -112,6 +112,22 @@ function getIssues (org, repository) {
   });
 }
 
+export function fetchMembers () {
+  return (dispatch, getState) => {
+    makeRequest(`{
+      organization (login:"appium") {
+        members(first:100) {
+          nodes {
+            login
+          }
+        }
+      }
+    }`).then(function (response) {
+      dispatch({type: FETCHED_MEMBERS, members: response.data.organization.members.nodes})
+    });
+  };
+}
+
 export function fetchIssues () {
   return (dispatch, getState) => {
     const { selectedOrganization, selectedRepository } = getState().searchFilter;
@@ -122,4 +138,12 @@ export function fetchIssues () {
   };
 }
 
-export { FETCHED_ORGANIZATIONS, FETCHING_ORGANIZATIONS, FETCHED_REPOSITORIES, FETCHING_REPOSITORIES, SET_ORGANIZATION, SET_REPOSITORY, FETCHED_ISSUES };
+export function setFilter (filter) {
+  return (dispatch) => {
+    dispatch({type: SET_FILTER, filter});
+  };
+};
+
+export { FETCHED_ORGANIZATIONS, FETCHING_ORGANIZATIONS, FETCHED_REPOSITORIES, FETCHING_REPOSITORIES, SET_ORGANIZATION, SET_REPOSITORY, FETCHED_ISSUES, FETCHED_MEMBERS ,
+  SET_FILTER
+};
