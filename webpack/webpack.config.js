@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 module.exports = {
   entry: './libs/client/index.js',
   output: {
@@ -10,8 +12,8 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         query: {
-          presets: ["babel-preset-es2015", "babel-preset-es2016", "babel-preset-es2017", "babel-preset-stage-2", "babel-preset-react"].map(require.resolve)
-        }
+          presets: ["babel-preset-es2015", "babel-preset-es2016", "babel-preset-es2017", "babel-preset-stage-2", "babel-preset-react"].map(require.resolve),
+        },
       },
       { test: /\.css$/, loader: "style-loader!css-loader" }
     ]
