@@ -14,7 +14,7 @@ export default class Inspector extends Component {
   render () {
     const { organizations, setOrganization, selectedOrganization, repositories, setRepository, selectedRepository,
       issues, setFilter, filter, setLastUpdated, lastUpdatedFilter, setFilterredLabels, filterredLabels, labels,
-      setExcludedLabels, excludedLabels } = this.props;
+      setExcludedLabels, excludedLabels, setSortBy, sortBy, setSortDirection, sortDirection } = this.props;
     return <div>
       <h1>Github Issue Filters</h1>
       <Row>
@@ -78,6 +78,20 @@ export default class Inspector extends Component {
         <Select mode="tags" style={{width:'100%'}} onChange={setExcludedLabels} value={excludedLabels}>
           {labels.map((label) => <Option key={label.name} value={label.name} style={{backgroundColor: label.color}}>{label.name}</Option>)}
         </Select>
+      </Row>
+      <Row>
+        <span>Sort by:</span>
+        <Col>
+          <Select style={{width: '100%'}} onChange={setSortBy} value={sortBy} defaultValue='updatedAt'>
+            <Option value='updatedAt'>Updated at</Option>
+            <Option value='createdAt'>Created at</Option>
+            <Option value='numberOfReactions'>Number of reactions</Option>
+          </Select>
+          <Select style={{width: '100%', marginTop: '1em'}} onChange={setSortDirection} value={sortDirection} defaultValue='desc'>
+            <Option value='desc'>Descending</Option>
+            <Option value='asc'>Ascending</Option>
+          </Select>
+        </Col>
       </Row>
       <Row>
         <Issues {...this.props} />

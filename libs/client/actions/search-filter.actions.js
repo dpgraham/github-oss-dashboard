@@ -15,6 +15,8 @@ const FETCHING_LABELS = 'FETCHING_LABELS';
 const FETCHED_LABELS = 'FETCHED_LABELS';
 const SET_FILTERRED_LABELS = 'SET_FILTERRED_LABELS';
 const SET_EXCLUDED_LABELS = 'SET_EXCLUDED_LABELS';
+const SET_SORT_DIRECTION = 'SET_SORT_DIRECTION';
+const SET_SORT_BY = 'SET_SORT_BY';
 
 export function fetchOrganizations () {
   return (dispatch, getState) => {
@@ -202,6 +204,18 @@ export function setExcludedLabels (excludedLabels) {
   }
 }
 
+export function setSortBy (sortBy) {
+  return (dispatch) => {
+    dispatch({type: SET_SORT_BY, sortBy});
+  }
+}
+
+export function setSortDirection (sortDirection) {
+  return (dispatch) => {
+    dispatch({type: SET_SORT_DIRECTION, sortDirection});
+  };
+}
+
 export { FETCHED_ORGANIZATIONS, FETCHING_ORGANIZATIONS, FETCHED_REPOSITORIES, FETCHING_REPOSITORIES, SET_ORGANIZATION, SET_REPOSITORY, FETCHED_ISSUES, FETCHED_MEMBERS ,
-  SET_FILTER, LAST_UPDATED_FILTER, FETCHING_ISSUES, FETCHING_LABELS, FETCHED_LABELS, SET_FILTERRED_LABELS, SET_EXCLUDED_LABELS
+  SET_FILTER, LAST_UPDATED_FILTER, FETCHING_ISSUES, FETCHING_LABELS, FETCHED_LABELS, SET_FILTERRED_LABELS, SET_EXCLUDED_LABELS, SET_SORT_DIRECTION, SET_SORT_BY
 };
