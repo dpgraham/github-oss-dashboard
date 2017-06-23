@@ -123,6 +123,29 @@ export default class Inspector extends Component {
       this.passesLabelExcludedFilter(issue);
   }
 
+  getSortedIssues() {
+    const { issues, sortBy, sortDirection } = this.props;
+    let out = issues.sort((issueOne, issueTwo) => {
+      switch (sortBy) {
+        case 'updatedAt':
+          return (+(new Date(issueOne.updatedAt))) > (+(new Date(issueTwo.updatedAt)));
+        case 'createdAt':
+          return (+(new Date(issueOne.createdAt))) > (+(new Date(issueTwo.createdAt)));
+        case 'numberOfReactions':
+          return (+(new Date(issueOne.reactions.totalCount))) > (+(new Date(issueTwo.reactions.totalCount)));
+        default:
+          break;
+      }
+      return true;
+    });
+
+    if (sortDirection === 'asc') {
+      return out.reverse();
+    } else {
+      return out;
+    }
+  }
+
   render () {
     const { issues, fetchingIssues } = this.props;
 
@@ -135,7 +158,7 @@ export default class Inspector extends Component {
     let totalCount = issues.length;
 
     let output = <ol>
-      {issues.map((issue) => this.passesAllFilters(issue) ? <li>
+      {this.getSortedIssues().map((issue) => this.passesAllFilters(issue) ? <li>
         <a target='_blank' href={issue.url}>{issue.title}</a>
       </li> : (() => {
         totalCount--;
