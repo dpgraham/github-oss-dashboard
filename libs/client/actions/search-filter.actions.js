@@ -9,6 +9,7 @@ const SET_REPOSITORY = 'SET_REPOSITORY';
 const FETCHED_ISSUES = 'FETCHED_ISSUES';
 const FETCHED_MEMBERS = 'FETCHED_MEMBERS';
 const SET_FILTER = 'SET_FILTER';
+const LAST_UPDATED_FILTER = 'LAST_UPDATED_FILTER';
 
 export function fetchOrganizations () {
   return (dispatch, getState) => {
@@ -77,11 +78,13 @@ function getIssues (org, repository) {
     function recursive(after) {
       return makeRequest(`{
         repository(owner:"${org}", name:"${repository}") {
-          issues (first: 100, states:OPEN, orderBy:{direction: ASC, field: UPDATED_AT}) {
+          issues (first: 100, states:OPEN, orderBy:{direction: DESC, field: CREATED_AT}) {
             totalCount
             nodes {
               title
               url
+              updatedAt
+              createdAt
               author {
                 login
               }
@@ -144,6 +147,12 @@ export function setFilter (filter) {
   };
 };
 
+export function setLastUpdated (lastUpdatedFilter) {
+  return (dispatch) => {
+    dispatch({type: LAST_UPDATED_FILTER, lastUpdatedFilter});
+  };
+}
+
 export { FETCHED_ORGANIZATIONS, FETCHING_ORGANIZATIONS, FETCHED_REPOSITORIES, FETCHING_REPOSITORIES, SET_ORGANIZATION, SET_REPOSITORY, FETCHED_ISSUES, FETCHED_MEMBERS ,
-  SET_FILTER
+  SET_FILTER, LAST_UPDATED_FILTER
 };

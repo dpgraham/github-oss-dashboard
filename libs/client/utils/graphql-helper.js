@@ -1,5 +1,5 @@
 // TODO: This should be provided by the user somehow
-let accessToken = '3ffe4a73992d6757364673597f3c1aefa8ab74c3';
+let accessToken = '2b655a06ee84a9938e96b9c79136f0a98c677937';
 
 export function makeRequest(query, variables) {
   return new Promise((resolve, reject) => {

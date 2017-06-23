@@ -56,6 +56,23 @@ export default class Inspector extends Component {
     }
   }
 
+  passesLastUpdatedFilter(issue) {
+    const { members, lastUpdatedFilter } = this.props;
+    const TWO_WEEKS = 2 * 7 * 24 * 60 * 60 * 1000;
+    switch (lastUpdatedFilter) {
+      case 'overTwoWeeksAgo':
+        return (+(new Date())) - (+(new Date(issue.updatedAt))) >= TWO_WEEKS;
+      case 'underTwoWeeksAgo':
+        return (+(new Date())) - (+(new Date(issue.updatedAt))) < TWO_WEEKS;
+      default:
+        return true;
+    }
+  }
+
+  passesAllFilters(issue) {
+    return this.passesFilter(issue) && this.passesLastUpdatedFilter(issue);
+  }
+
   render () {
     const { issues } = this.props;
 
@@ -63,14 +80,14 @@ export default class Inspector extends Component {
 
     let totalCount = issues.length;
 
-    let output = <ul>
-      {issues.map((issue) => this.passesFilter(issue) ? <li>
+    let output = <ol>
+      {issues.map((issue) => this.passesAllFilters(issue) ? <li>
         <a target='_blank' href={issue.url}>{issue.title}</a>
       </li> : (() => {
         totalCount--;
         return null;
       })())}
-    </ul>;
+    </ol>;
 
     return <div>
       <p>{totalCount} Results</p>

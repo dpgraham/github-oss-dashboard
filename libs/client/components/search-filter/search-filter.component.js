@@ -6,14 +6,14 @@ import Issues from './issues.component.js';
 const { Option } = Select;
 
 export default class Inspector extends Component {
-  
+
   componentWillMount () {
     this.props.fetchOrganizations();
   }
 
   render () {
     const { organizations, setOrganization, selectedOrganization, repositories, setRepository, selectedRepository,
-      issues, setFilter, filter } = this.props;
+      issues, setFilter, filter, setLastUpdated, lastUpdatedFilter } = this.props;
     return <div>
       <h1>Github Issue Filters</h1>
       <Row>
@@ -55,6 +55,14 @@ export default class Inspector extends Component {
           <Option value='lastCommentedOnByMember'>Was last commented on by a team member</Option>
           <Option value='notLastCommentedOnByMember'>Was not last commented on by a team member</Option>
           <Option value='hasNoComments'>Has no comment</Option>
+        </Select>
+      </Row>
+      <Row>
+        <span>Last updated:</span>
+        <Select style={{width: '100%'}} onChange={setLastUpdated} value={lastUpdatedFilter}>
+          <Option value='none'>Any time</Option>
+          <Option value='overTwoWeeksAgo'>More than two weeks ago</Option>
+          <Option value='underTwoWeeksAgo'>Less than two weeks ago</Option>
         </Select>
       </Row>
       <Row>
