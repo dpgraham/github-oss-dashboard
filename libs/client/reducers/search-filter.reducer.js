@@ -1,7 +1,8 @@
 import { omit } from 'lodash';
 
 import { FETCHING_ORGANIZATIONS, FETCHED_ORGANIZATIONS, SET_ORGANIZATION, 
-  FETCHING_REPOSITORIES, FETCHED_REPOSITORIES, SET_REPOSITORY } from '../actions/search-filter.actions';
+  FETCHING_REPOSITORIES, FETCHED_REPOSITORIES, SET_REPOSITORY,
+  FETCHED_ISSUES } from '../actions/search-filter.actions';
 
 const INITIAL_STATE = {
   organizations: [],
@@ -47,6 +48,11 @@ export default function searchFilter (state=INITIAL_STATE, action) {
       return {
         ...state,
         selectedRepository: action.repository,
+      };
+    case FETCHED_ISSUES:
+      return {
+        ...state,
+        issues: action.issues,
       };
     default:
       return {...state};

@@ -15,4 +15,3 @@ FILTERS:
 * Has been updated in the last ____ days
 * Has label ____
 * Authored by ____
-* 
