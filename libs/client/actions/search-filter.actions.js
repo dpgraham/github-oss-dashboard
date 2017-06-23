@@ -10,6 +10,7 @@ const FETCHED_ISSUES = 'FETCHED_ISSUES';
 const FETCHED_MEMBERS = 'FETCHED_MEMBERS';
 const SET_FILTER = 'SET_FILTER';
 const LAST_UPDATED_FILTER = 'LAST_UPDATED_FILTER';
+const FETCHING_ISSUES = 'FETCHING_ISSUES';
 
 export function fetchOrganizations () {
   return (dispatch, getState) => {
@@ -135,6 +136,7 @@ export function fetchIssues () {
   return (dispatch, getState) => {
     const { selectedOrganization, selectedRepository } = getState().searchFilter;
     let issues = [];
+    dispatch({type: FETCHING_ISSUES});
     getIssues(selectedOrganization, selectedRepository).then((issues) => {
       dispatch({type: FETCHED_ISSUES, issues});
     });
@@ -154,5 +156,5 @@ export function setLastUpdated (lastUpdatedFilter) {
 }
 
 export { FETCHED_ORGANIZATIONS, FETCHING_ORGANIZATIONS, FETCHED_REPOSITORIES, FETCHING_REPOSITORIES, SET_ORGANIZATION, SET_REPOSITORY, FETCHED_ISSUES, FETCHED_MEMBERS ,
-  SET_FILTER, LAST_UPDATED_FILTER
+  SET_FILTER, LAST_UPDATED_FILTER, FETCHING_ISSUES
 };

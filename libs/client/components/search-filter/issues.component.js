@@ -17,7 +17,7 @@ export default class Inspector extends Component {
     switch (filter) {
       case 'openedByMember':
         var isMatch = false;
-        members.forEach((member) => member.login === issue.author.login && (isMatch = true));
+        members.forEach((member) => (issue.author && member.login === issue.author.login) && (isMatch = true));
         return isMatch;
       case 'commentedOnByMember':
         var isMatch = false;
@@ -74,7 +74,11 @@ export default class Inspector extends Component {
   }
 
   render () {
-    const { issues } = this.props;
+    const { issues, fetchingIssues } = this.props;
+
+    if (fetchingIssues) {
+      return <p style={{fontStyle: 'italic', marginTop: 20}}>Fetching Issues</p>;
+    }
 
     if (!issues) return null;
 
