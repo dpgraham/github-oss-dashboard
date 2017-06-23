@@ -92,8 +92,35 @@ export default class Inspector extends Component {
     return isMatch;
   }
 
+  passesLabelExcludedFilter(issue) {
+    const { excludedLabels } = this.props;
+
+
+    // If no labels were provided, don't do anything
+    if (!excludedLabels || excludedLabels.length === 0) {
+      return true;
+    }
+
+    // Check that all of the labels match
+    let isMatch = true;
+    excludedLabels.forEach((filterredLabel) => {
+      let index = issue.labels.nodes.findIndex((label) => {
+        return label.name === filterredLabel;
+      });
+      if (index >= 0) {
+        isMatch = false;
+        return false;
+      }
+    });
+
+    return isMatch;
+  }
+
   passesAllFilters(issue) {
-    return this.passesFilter(issue) && this.passesLastUpdatedFilter(issue) && this.passesLabelFilter(issue);
+    return this.passesFilter(issue) && 
+      this.passesLastUpdatedFilter(issue) && 
+      this.passesLabelFilter(issue) &&
+      this.passesLabelExcludedFilter(issue);
   }
 
   render () {

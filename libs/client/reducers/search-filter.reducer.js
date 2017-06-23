@@ -3,7 +3,7 @@ import { omit } from 'lodash';
 import { FETCHING_ORGANIZATIONS, FETCHED_ORGANIZATIONS, SET_ORGANIZATION, 
   FETCHING_REPOSITORIES, FETCHED_REPOSITORIES, SET_REPOSITORY,
   FETCHING_ISSUES, FETCHED_ISSUES, FETCHED_MEMBERS, SET_FILTER, LAST_UPDATED_FILTER,
-  FETCHING_LABELS, FETCHED_LABELS, SET_FILTERRED_LABELS } from '../actions/search-filter.actions';
+  FETCHING_LABELS, FETCHED_LABELS, SET_FILTERRED_LABELS, SET_EXCLUDED_LABELS } from '../actions/search-filter.actions';
 
 const INITIAL_STATE = {
   organizations: [],
@@ -95,6 +95,11 @@ export default function searchFilter (state=INITIAL_STATE, action) {
       return {
         ...state,
         filterredLabels: action.filterredLabels,
+      };
+    case SET_EXCLUDED_LABELS:
+      return {
+        ...state,
+        excludedLabels: action.excludedLabels,
       };
     default:
       return {...state};

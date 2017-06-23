@@ -13,7 +13,8 @@ export default class Inspector extends Component {
 
   render () {
     const { organizations, setOrganization, selectedOrganization, repositories, setRepository, selectedRepository,
-      issues, setFilter, filter, setLastUpdated, lastUpdatedFilter, setFilterredLabels, filterredLabels, labels} = this.props;
+      issues, setFilter, filter, setLastUpdated, lastUpdatedFilter, setFilterredLabels, filterredLabels, labels,
+      setExcludedLabels, excludedLabels } = this.props;
     return <div>
       <h1>Github Issue Filters</h1>
       <Row>
@@ -69,6 +70,12 @@ export default class Inspector extends Component {
       <Row>
         <span>Has labels:</span>
         <Select mode="tags" style={{width:'100%'}} onChange={setFilterredLabels} value={filterredLabels}>
+          {labels.map((label) => <Option key={label.name} value={label.name} style={{backgroundColor: label.color}}>{label.name}</Option>)}
+        </Select>
+      </Row>
+      <Row>
+        <span>Exclude with labels:</span>
+        <Select mode="tags" style={{width:'100%'}} onChange={setExcludedLabels} value={excludedLabels}>
           {labels.map((label) => <Option key={label.name} value={label.name} style={{backgroundColor: label.color}}>{label.name}</Option>)}
         </Select>
       </Row>
