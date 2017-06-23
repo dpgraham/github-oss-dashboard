@@ -69,8 +69,31 @@ export default class Inspector extends Component {
     }
   }
 
+  passesLabelFilter(issue) {
+    const { filterredLabels } = this.props;
+
+    // If no labels were provided, don't do anything
+    if (!filterredLabels || filterredLabels.length === 0) {
+      return true;
+    }
+
+    // Check that all of the labels match
+    let isMatch = true;
+    filterredLabels.forEach((filterredLabel) => {
+      let index = issue.labels.nodes.findIndex((label) => {
+        return label.name === filterredLabel;
+      });
+      if (index < 0) {
+        isMatch = false;
+        return false;
+      }
+    });
+
+    return isMatch;
+  }
+
   passesAllFilters(issue) {
-    return this.passesFilter(issue) && this.passesLastUpdatedFilter(issue);
+    return this.passesFilter(issue) && this.passesLastUpdatedFilter(issue) && this.passesLabelFilter(issue);
   }
 
   render () {
