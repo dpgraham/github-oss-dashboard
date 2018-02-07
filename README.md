@@ -1,4 +1,6 @@
 # Github OSS Dashboard
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/dpgraham/github-oss-dashboard.svg)](https://greenkeeper.io/)
 A UI for querying and visualizing open source Github projects 
 
 ## NPM Scripts
